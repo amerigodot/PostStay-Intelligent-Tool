@@ -180,6 +180,36 @@ export const guests: Guest[] = [
     preferences: [],
     consentStatus: { marketing: false, analytics: false, thirdParty: false, lastUpdated: '2024-11-22' },
   },
+  // New guest with no feedback history - demonstrates "Not enough data" fallback
+  {
+    id: 'guest-9',
+    pseudonymizedKey: 'GK-4H8J3K',
+    firstName: 'Thomas',
+    lastInitial: 'H',
+    email: 'thomas.h@email.nl',
+    nationality: 'NL',
+    language: 'en',
+    totalStays: 1,
+    lifetimeValue: 420,
+    // No NPS score - first stay, no feedback yet
+    sentimentTrend: 'neutral',
+    preferences: ['early-checkin'],
+    consentStatus: { marketing: true, analytics: true, thirdParty: false, lastUpdated: '2025-02-03' },
+  },
+  // Another new guest - arriving, no prior history
+  {
+    id: 'guest-10',
+    pseudonymizedKey: 'GK-7L2M9N',
+    firstName: 'Chiara',
+    lastInitial: 'P',
+    nationality: 'IT',
+    language: 'it',
+    totalStays: 1,
+    lifetimeValue: 380,
+    sentimentTrend: 'neutral',
+    preferences: [],
+    consentStatus: { marketing: false, analytics: true, thirdParty: false, lastUpdated: '2025-02-04' },
+  },
 ];
 
 // Stays
@@ -279,6 +309,31 @@ export const stays: Stay[] = [
     bookingChannel: 'airbnb',
     totalSpend: 280,
     status: 'checked-out',
+  },
+  // New guests with no feedback - will show "Not enough data"
+  {
+    id: 'stay-9',
+    guestId: 'guest-9',
+    propertyId: 'prop-1',
+    checkIn: '2025-02-04',
+    checkOut: '2025-02-06',
+    roomType: 'Standard Double',
+    roomNumber: '215',
+    bookingChannel: 'booking.com',
+    totalSpend: 420,
+    status: 'upcoming',
+  },
+  {
+    id: 'stay-10',
+    guestId: 'guest-10',
+    propertyId: 'prop-1',
+    checkIn: '2025-02-05',
+    checkOut: '2025-02-07',
+    roomType: 'Standard Single',
+    roomNumber: '108',
+    bookingChannel: 'direct',
+    totalSpend: 380,
+    status: 'upcoming',
   },
 ];
 

@@ -1,13 +1,10 @@
 import { MainLayout } from '@/components/layout/MainLayout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Search, Users, ArrowUpRight, ArrowDownRight, Clock, Sparkles } from 'lucide-react';
 import { guests, stays, getGuestById, properties } from '@/data/mockData';
-import { SentimentBadge } from '@/components/shared/SentimentBadge';
-import { NpsScoreBadge } from '@/components/shared/NpsScoreBadge';
+import { GuestCard } from '@/components/guests/GuestCard';
 import { useState } from 'react';
 
 export default function ReceptionistDashboard() {
@@ -166,69 +163,5 @@ export default function ReceptionistDashboard() {
   );
 }
 
-interface GuestCardProps {
-  guest: NonNullable<ReturnType<typeof getGuestById>>;
-  stay: typeof stays[number];
-}
-
-function GuestCard({ guest, stay }: GuestCardProps) {
-  const isVip = guest.lifetimeValue > 3000;
-
-  return (
-    <div className="flex items-center justify-between rounded-lg border p-4 transition-colors hover:bg-muted/50">
-      <div className="flex items-center gap-4">
-        <div className="flex flex-col items-center gap-1">
-          <SentimentBadge sentiment={guest.sentimentTrend} size="lg" />
-          {guest.npsScore !== undefined && (
-            <NpsScoreBadge score={guest.npsScore} size="sm" />
-          )}
-        </div>
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="font-medium">
-              {guest.firstName} {guest.lastInitial}.
-            </span>
-            {isVip && (
-              <Badge variant="secondary" className="gap-1 bg-primary/10 text-primary">
-                <Sparkles className="h-3 w-3" />
-                VIP
-              </Badge>
-            )}
-            <Badge variant="outline" className="text-xs">
-              {guest.nationality}
-            </Badge>
-          </div>
-          <div className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
-            <span>Room {stay.roomNumber}</span>
-            <span>•</span>
-            <span>{stay.roomType}</span>
-            <span>•</span>
-            <span>{guest.totalStays} stays</span>
-          </div>
-          {guest.preferences.length > 0 && (
-            <div className="mt-2 flex flex-wrap gap-1">
-              {guest.preferences.slice(0, 3).map(pref => (
-                <Badge key={pref} variant="secondary" className="text-xs">
-                  {pref}
-                </Badge>
-              ))}
-              {guest.preferences.length > 3 && (
-                <Badge variant="secondary" className="text-xs">
-                  +{guest.preferences.length - 3}
-                </Badge>
-              )}
-            </div>
-          )}
-        </div>
-      </div>
-      <div className="flex items-center gap-2">
-        <Button variant="outline" size="sm">
-          View Profile
-        </Button>
-        <Button size="sm">
-          Actions
-        </Button>
-      </div>
-    </div>
-  );
-}
+// GuestCard component extracted to src/components/guests/GuestCard.tsx
+// for better separation of concerns and reusability
