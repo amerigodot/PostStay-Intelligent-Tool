@@ -1,73 +1,97 @@
-# Welcome to your Lovable project
+# PostStay Intelligence Platform
 
-## Project info
+**Privacy-First Post-Stay Management for Hospitality SMEs**
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+PostStay Intelligence is a comprehensive dashboard designed to orchestrate systematic post-stay engagement. It bridges the gap between Property Management Systems (PMS) and guest satisfaction by automating feedback collection, providing AI-powered sentiment analysis, and enabling privacy-compliant upselling—all within a strict governance framework.
 
-## How can I edit this code?
+> **Note:** This repository contains the **Frontend Staff Console** implementation.
 
-There are several ways of editing your application.
+## 🚀 Key Features
 
-**Use Lovable**
+*   **Role-Based Consoles:** Tailored interfaces for Receptionists, Guest Relations, Marketing, Managers, and Admins.
+*   **Privacy by Design:** Architectural pseudonymization ensures AI components never process raw PII.
+*   **AI-Powered Insights:** Automated sentiment scoring, theme classification, and anomaly detection.
+*   **Unified Workflow:** Seamlessly manages the Checkout → Survey → Follow-up → Analysis cycle.
+*   **Governance & Compliance:** Full audit logging, incident management, and GDPR-compliant consent handling.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## 👥 User Roles
 
-Changes made via Lovable will be committed automatically to this repo.
+1.  **Receptionist:** View daily arrivals with past sentiment context; manage on-site upsell opportunities.
+2.  **Guest Relations:** Handle feedback inbox; review AI-drafted responses; manage guest recovery.
+3.  **Marketing:** Create segments based on sentiment and preferences; schedule multi-channel campaigns.
+4.  **Manager:** Monitor high-level KPIs (NPS, Response Rate); oversee system alerts and reporting.
+5.  **Admin:** Manage users, integrations, and audit logs.
 
-**Use your preferred IDE**
+## 🛠️ Tech Stack
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+*   **Framework:** React 18 (Vite)
+*   **Language:** TypeScript
+*   **UI System:** [shadcn-ui](https://ui.shadcn.com/) + Tailwind CSS
+*   **State Management:** TanStack Query + React Context
+*   **Icons:** Lucide React
+*   **Testing:** Vitest + React Testing Library
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🚦 Getting Started
 
-Follow these steps:
+### Prerequisites
+*   Node.js (v18 or higher)
+*   npm or bun
+
+### Installation
+
+1.  **Clone the repository**
+    ```sh
+    git clone <YOUR_GIT_URL>
+    cd PMS-hospitality-tool
+    ```
+
+2.  **Install dependencies**
+    ```sh
+    npm install
+    ```
+
+3.  **Start the development server**
+    ```sh
+    npm run dev
+    ```
+    The application will be available at `http://localhost:8080`.
+
+### Building for Production
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+npm run build
 ```
 
-**Edit a file directly in GitHub**
+## 📂 Project Structure
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```
+src/
+├── components/         # Reusable UI components
+│   ├── layout/         # App shell and sidebar
+│   └── ui/             # Shadcn primitives
+├── contexts/           # React Context (RoleProvider)
+├── data/               # Mock data (Simulated Backend)
+├── pages/              # Role-specific dashboards
+│   ├── admin/
+│   ├── guest-relations/
+│   ├── manager/
+│   ├── marketing/
+│   └── receptionist/
+└── types/              # Domain models (Guest, Stay, Feedback)
+```
 
-**Use GitHub Codespaces**
+## 📄 Documentation
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+For a detailed technical blueprint, architectural diagrams, and privacy specifications, please refer to the internal documentation: `Tourism Staff Tool.docx`.
 
-## What technologies are used for this project?
+## 🤝 Contributing
 
-This project is built with:
+1.  Fork the Project
+2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4.  Push to the Branch (`git push origin feature/AmazingFeature`)
+5.  Open a Pull Request
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+---
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+*Built with ❤️ for the Hospitality Industry.*
