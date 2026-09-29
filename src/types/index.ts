@@ -1,48 +1,71 @@
 // User Roles
 export type UserRole = 'receptionist' | 'guest-relations' | 'marketing' | 'manager' | 'admin';
 
+export const roleLabels: Record<UserRole, string> = {
+  receptionist: 'Receptionist Console',
+  'guest-relations': 'Guest Relations Officer',
+  marketing: 'Marketing & Loyalty Director',
+  manager: 'General Manager (KPIs)',
+  admin: 'Compliance & System Admin',
+};
+
+export const availableRoles: UserRole[] = ['receptionist', 'guest-relations', 'marketing', 'manager', 'admin'];
+
 export interface User {
   id: string;
   name: string;
   email: string;
   role: UserRole;
   avatar?: string;
+  propertyAccess?: string[];
 }
 
-// Properties
+// Distinguished Properties
 export interface Property {
   id: string;
   name: string;
-  type: 'hotel' | 'bnb' | 'resort';
+  tagline: string;
+  type: 'palace' | 'retreat' | 'resort' | 'heritage' | 'boutique';
   location: string;
   region: string;
-  stars?: number;
+  stars: number;
   roomCount: number;
+  averageRate: number;
+  npsBenchmark: number;
+  currency: string;
 }
 
 // Guests
 export interface Guest {
   id: string;
   pseudonymizedKey: string;
+  vaultHash: string;
   firstName: string;
   lastInitial: string;
+  fullNameMasked?: string;
+  title?: string;
   email?: string;
   phone?: string;
   nationality: string;
   language: 'it' | 'en' | 'de' | 'fr';
+  vipTier?: 'Heritage Patron' | 'Ambassador' | 'Distinguished Member' | 'First-Time Guest';
   totalStays: number;
   lifetimeValue: number;
   npsScore?: number;
   sentimentTrend: 'positive' | 'neutral' | 'negative';
   preferences: string[];
+  dietaryNotes?: string[];
   consentStatus: ConsentStatus;
+  lastStayPropertyId?: string;
 }
 
 export interface ConsentStatus {
   marketing: boolean;
   analytics: boolean;
   thirdParty: boolean;
+  conciergeProfiling: boolean;
   lastUpdated: string;
+  ledgerProof?: string;
 }
 
 // Stays
@@ -54,15 +77,24 @@ export interface Stay {
   checkOut: string;
   roomType: string;
   roomNumber: string;
-  bookingChannel: 'direct' | 'booking.com' | 'expedia' | 'airbnb' | 'phone';
+  bookingChannel: 'direct' | 'the-leading-hotels' | 'virtuoso' | 'booking.com' | 'concierge-private' | 'expedia' | 'airbnb' | 'phone';
   totalSpend: number;
   status: 'upcoming' | 'checked-in' | 'checked-out';
+  notes?: string;
 }
 
 // Feedback
 export type SentimentScore = 'positive' | 'neutral' | 'negative';
-export type FeedbackSource = 'survey' | 'google' | 'tripadvisor' | 'booking.com' | 'direct';
+export type FeedbackSource = 'survey' | 'google' | 'tripadvisor' | 'booking.com' | 'direct' | 'guest-book';
 export type FeedbackStatus = 'new' | 'in-review' | 'responded' | 'escalated' | 'resolved';
+export type FeedbackUrgency = 'low' | 'medium' | 'high' | 'critical';
+
+export interface FeedbackAiDrafts {
+  diplomatic: string;
+  warm: string;
+  recovery: string;
+  concise: string;
+}
 
 export interface Feedback {
   id: string;
@@ -74,14 +106,23 @@ export interface Feedback {
   rating?: number;
   npsScore?: number;
   sentiment: SentimentScore;
+  urgency: FeedbackUrgency;
+  aiConfidence: number;
   themes: string[];
   summary: string;
   fullText?: string;
-  language: 'it' | 'en';
+  language: 'it' | 'en' | 'de' | 'fr';
   status: FeedbackStatus;
   assignedTo?: string;
   responseText?: string;
   respondedAt?: string;
+  aiDrafts?: FeedbackAiDrafts;
+  categoryRatings?: {
+    service: number;
+    gastronomy: number;
+    comfort: number;
+    privacy: number;
+  };
 }
 
 // Upsell Opportunities
@@ -89,9 +130,11 @@ export interface UpsellOpportunity {
   id: string;
   guestId: string;
   stayId?: string;
+  propertyId?: string;
   type: 'spa' | 'dining' | 'upgrade' | 'experience' | 'return-booking';
   title: string;
   description: string;
+  price?: number;
   confidence: number;
   basedOn: string;
   status: 'suggested' | 'offered' | 'accepted' | 'declined';

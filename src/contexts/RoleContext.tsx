@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import type { UserRole, User } from '@/types';
+import { roleLabels, availableRoles } from '@/types';
 import { users } from '@/data/mockData';
 
 interface RoleContextType {
@@ -10,16 +11,6 @@ interface RoleContextType {
 }
 
 const RoleContext = createContext<RoleContextType | undefined>(undefined);
-
-const roleLabels: Record<UserRole, string> = {
-  receptionist: 'Receptionist',
-  'guest-relations': 'Guest Relations',
-  marketing: 'Marketing',
-  manager: 'Manager',
-  admin: 'Admin',
-};
-
-const availableRoles: UserRole[] = ['receptionist', 'guest-relations', 'marketing', 'manager', 'admin'];
 
 function getUserByRole(role: UserRole): User {
   return users.find(u => u.role === role) || users[0];
@@ -48,5 +39,3 @@ export function useRole() {
   }
   return context;
 }
-
-export { roleLabels };

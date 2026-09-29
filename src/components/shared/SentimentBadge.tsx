@@ -11,22 +11,22 @@ interface SentimentBadgeProps {
 const sentimentConfig: Record<SentimentScore, { label: string; className: string }> = {
   positive: {
     label: 'Positive',
-    className: 'bg-sentiment-positive text-white',
+    className: 'bg-emerald-700 dark:bg-emerald-600 text-white font-semibold shadow-2xs',
   },
   neutral: {
     label: 'Neutral',
-    className: 'bg-sentiment-neutral text-black',
+    className: 'bg-amber-600 text-white font-semibold shadow-2xs',
   },
   negative: {
     label: 'Negative',
-    className: 'bg-sentiment-negative text-white',
+    className: 'bg-rose-700 dark:bg-rose-600 text-white font-semibold shadow-2xs',
   },
 };
 
 const sizeClasses = {
   sm: 'h-2 w-2',
-  md: 'h-3 w-3',
-  lg: 'h-4 w-4',
+  md: 'h-2.5 w-2.5',
+  lg: 'h-3.5 w-3.5',
 };
 
 export function SentimentBadge({ sentiment, showLabel = false, size = 'md', className }: SentimentBadgeProps) {
@@ -36,12 +36,12 @@ export function SentimentBadge({ sentiment, showLabel = false, size = 'md', clas
     return (
       <span
         className={cn(
-          'inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium',
+          'inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-semibold tracking-wide',
           config.className,
           className
         )}
       >
-        <span className={cn('rounded-full bg-current opacity-80', sizeClasses[size])} />
+        <span className={cn('rounded-full bg-white opacity-90', sizeClasses[size])} />
         {config.label}
       </span>
     );
@@ -50,7 +50,7 @@ export function SentimentBadge({ sentiment, showLabel = false, size = 'md', clas
   return (
     <span
       className={cn(
-        'inline-block rounded-full',
+        'inline-block rounded-full shadow-2xs',
         sizeClasses[size],
         config.className,
         className

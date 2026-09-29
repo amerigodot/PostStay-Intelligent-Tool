@@ -1,18 +1,19 @@
 import { MainLayout } from '@/components/layout/MainLayout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { 
   TrendingUp, 
-  TrendingDown, 
   MessageSquare, 
   Star, 
   AlertTriangle,
   Sparkles,
   ArrowUpRight,
   BarChart3,
+  Building2,
+  ShieldCheck,
+  Award,
 } from 'lucide-react';
-import { dashboardKPIs, alerts, feedback } from '@/data/mockData';
+import { useHospitalityData } from '@/contexts/HospitalityDataContext';
 import { 
   AreaChart, 
   Area, 
@@ -21,144 +22,254 @@ import {
   CartesianGrid, 
   Tooltip, 
   ResponsiveContainer,
+  BarChart,
+  Bar,
+  Cell,
   PieChart,
   Pie,
-  Cell,
 } from 'recharts';
 
-// Mock trend data for chart
 const trendData = [
-  { date: 'Jan 1', nps: 38, volume: 42 },
-  { date: 'Jan 8', nps: 41, volume: 38 },
-  { date: 'Jan 15', nps: 39, volume: 45 },
-  { date: 'Jan 22', nps: 44, volume: 52 },
-  { date: 'Jan 29', nps: 42, volume: 48 },
-  { date: 'Feb 1', nps: 42, volume: 44 },
+  { date: 'Jan 1', nps: 76, volume: 48, luxuryBenchmark: 80 },
+  { date: 'Jan 8', nps: 81, volume: 54, luxuryBenchmark: 80 },
+  { date: 'Jan 15', nps: 79, volume: 62, luxuryBenchmark: 80 },
+  { date: 'Jan 22', nps: 86, volume: 71, luxuryBenchmark: 80 },
+  { date: 'Jan 29', nps: 84, volume: 82, luxuryBenchmark: 80 },
+  { date: 'Feb 3', nps: 88, volume: 88, luxuryBenchmark: 80 },
 ];
 
-const sentimentColors = {
-  positive: 'hsl(142, 71%, 45%)',
-  neutral: 'hsl(38, 92%, 50%)',
-  negative: 'hsl(0, 72%, 51%)',
-};
-
 export default function ManagerDashboard() {
-  const { sentimentDistribution } = dashboardKPIs;
-  const pieData = [
-    { name: 'Positive', value: sentimentDistribution.positive, color: sentimentColors.positive },
-    { name: 'Neutral', value: sentimentDistribution.neutral, color: sentimentColors.neutral },
-    { name: 'Negative', value: sentimentDistribution.negative, color: sentimentColors.negative },
+  const { 
+    kpis, 
+    properties, 
+    activeProperty,
+  } = useHospitalityData();
+
+  // Multi-property comparison benchmark data
+  const propertyBenchmarkData = properties.map(p => ({
+    name: p.name.replace('Hotel ', ''),
+    nps: p.npsBenchmark,
+    roomCount: p.roomCount,
+    avgRate: p.averageRate,
+  }));
+
+  const sentimentData = [
+    { name: 'Promoters (9-10)', value: kpis.sentimentDistribution.positive, color: 'hsl(154, 75%, 32%)' },
+    { name: 'Passives (7-8)', value: kpis.sentimentDistribution.neutral, color: 'hsl(35, 92%, 42%)' },
+    { name: 'Detractors (1-6)', value: kpis.sentimentDistribution.negative, color: 'hsl(0, 80%, 46%)' },
   ];
 
   return (
     <MainLayout 
-      title="Dashboard" 
-      breadcrumbs={[{ label: 'Overview' }]}
+      title={activeProperty ? `${activeProperty.name} • Executive Intelligence` : "Executive Portfolio Intelligence & KPIs"} 
+      breadcrumbs={[{ label: 'Executive Dashboard' }]}
     >
-      {/* KPI Cards */}
+      {/* Top Level KPIs */}
       <div className="mb-6 grid gap-4 md:grid-cols-4">
-        <KpiCard
-          title="NPS Score"
-          value={dashboardKPIs.npsScore}
-          trend={dashboardKPIs.npsTrend}
-          subtitle="Net Promoter Score"
-          icon={Star}
-        />
-        <KpiCard
-          title="Response Rate"
-          value={`${dashboardKPIs.responseRate}%`}
-          trend={dashboardKPIs.responseRateTrend}
-          subtitle="Survey responses"
-          icon={MessageSquare}
-        />
-        <KpiCard
-          title="Review Volume"
-          value={dashboardKPIs.reviewVolume}
-          trend={dashboardKPIs.reviewVolumeTrend}
-          subtitle="Last 30 days"
-          icon={BarChart3}
-        />
-        <KpiCard
-          title="Pending Actions"
-          value={dashboardKPIs.unresolvedFeedback + dashboardKPIs.pendingResponses}
-          subtitle={`${dashboardKPIs.unresolvedFeedback} unresolved, ${dashboardKPIs.pendingResponses} pending`}
-          icon={AlertTriangle}
-          warning
-        />
-      </div>
-
-      <div className="grid gap-6 lg:grid-cols-3">
-        {/* Trend Chart */}
-        <Card className="lg:col-span-2">
-          <CardHeader>
-            <CardTitle>NPS & Review Trends</CardTitle>
-            <CardDescription>Weekly performance over time</CardDescription>
+        {/* KPI 1: Net Promoter Score */}
+        <Card className="border-border bg-card shadow-xs">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+              Portfolio Net Promoter Score
+            </CardTitle>
+            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400">
+              <Star className="h-4 w-4 fill-amber-500 text-amber-500" />
+            </div>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={250}>
-              <AreaChart data={trendData}>
-                <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-                <XAxis dataKey="date" className="text-xs" />
-                <YAxis className="text-xs" />
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: 'hsl(var(--card))', 
-                    border: '1px solid hsl(var(--border))',
-                    borderRadius: '8px',
-                  }} 
-                />
-                <Area 
-                  type="monotone" 
-                  dataKey="nps" 
-                  stroke="hsl(var(--primary))" 
-                  fill="hsl(var(--primary) / 0.2)" 
-                  name="NPS"
-                />
-                <Area 
-                  type="monotone" 
-                  dataKey="volume" 
-                  stroke="hsl(var(--info))" 
-                  fill="hsl(var(--info) / 0.2)" 
-                  name="Reviews"
-                />
-              </AreaChart>
-            </ResponsiveContainer>
+            <div className="text-3xl font-bold font-serif text-foreground">
+              +{kpis.npsScore}
+            </div>
+            <div className="flex items-center gap-1.5 text-xs text-emerald-800 dark:text-emerald-400 mt-1 font-bold">
+              <TrendingUp className="h-3.5 w-3.5" />
+              <span>+{kpis.npsTrend} pts vs prior quarter</span>
+            </div>
+            <p className="text-[11px] font-medium text-muted-foreground mt-1">Leading Hotels benchmark: +78</p>
           </CardContent>
         </Card>
 
-        {/* Sentiment Distribution */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Sentiment Distribution</CardTitle>
-            <CardDescription>Current period breakdown</CardDescription>
+        {/* KPI 2: Survey Response Rate */}
+        <Card className="border-border bg-card shadow-xs">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+              Micro-Survey Completion Rate
+            </CardTitle>
+            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10 text-primary">
+              <MessageSquare className="h-4 w-4" />
+            </div>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={200}>
-              <PieChart>
-                <Pie
-                  data={pieData}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={50}
-                  outerRadius={80}
-                  paddingAngle={2}
-                  dataKey="value"
-                >
-                  {pieData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
-            <div className="mt-4 flex justify-center gap-4">
-              {pieData.map(item => (
-                <div key={item.name} className="flex items-center gap-1.5 text-sm">
-                  <span 
-                    className="h-3 w-3 rounded-full" 
-                    style={{ backgroundColor: item.color }} 
+            <div className="text-3xl font-bold font-serif text-foreground">
+              {kpis.responseRate}%
+            </div>
+            <div className="flex items-center gap-1.5 text-xs text-emerald-800 dark:text-emerald-400 mt-1 font-bold">
+              <TrendingUp className="h-3.5 w-3.5" />
+              <span>+3.2% (T+2h checkout dispatch)</span>
+            </div>
+            <p className="text-[11px] font-medium text-muted-foreground mt-1">Average open rate: 94.8%</p>
+          </CardContent>
+        </Card>
+
+        {/* KPI 3: Review Volume */}
+        <Card className="border-border bg-card shadow-xs">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+              Analyzed Verified Reviews
+            </CardTitle>
+            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-sky-50 dark:bg-sky-950/40 text-sky-800 dark:text-sky-300">
+              <BarChart3 className="h-4 w-4" />
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold font-serif text-foreground">
+              {kpis.reviewVolume}
+            </div>
+            <div className="flex items-center gap-1.5 text-xs text-sky-800 dark:text-sky-400 mt-1 font-bold">
+              <ArrowUpRight className="h-3.5 w-3.5" />
+              <span>+{kpis.reviewVolumeTrend}% YoY volume</span>
+            </div>
+            <p className="text-[11px] font-medium text-muted-foreground mt-1">Across survey, direct, & Leading channels</p>
+          </CardContent>
+        </Card>
+
+        {/* KPI 4: Pending Actions */}
+        <Card className="border-border bg-card shadow-xs">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+              Service Recovery Actions
+            </CardTitle>
+            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300">
+              <AlertTriangle className="h-4 w-4" />
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold font-serif text-amber-800 dark:text-amber-400">
+              {kpis.unresolvedFeedback}
+            </div>
+            <p className="text-xs font-medium text-muted-foreground mt-1">
+              {kpis.pendingResponses} escalated to executive desk
+            </p>
+            <p className="text-[11px] font-semibold text-emerald-800 dark:text-emerald-400 mt-1">Turnaround: 100% &lt; 24h</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Main Charts Row */}
+      <div className="grid gap-6 lg:grid-cols-3 mb-6">
+        {/* Trend Chart (Span 2) */}
+        <Card className="lg:col-span-2 border-border bg-card shadow-xs">
+          <CardHeader className="pb-2 border-b border-border/60">
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle className="text-base font-serif font-bold text-foreground">
+                  NPS Trajectory & Survey Feedback Inflow
+                </CardTitle>
+                <CardDescription className="text-xs text-muted-foreground font-medium">
+                  Weekly rolling sentiment index compared to luxury hospitality baseline
+                </CardDescription>
+              </div>
+              <Badge variant="outline" className="text-xs font-bold border-emerald-600/50 text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/30">
+                Outperforming Index (+6 pts)
+              </Badge>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[260px] w-full pt-4">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={trendData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="npsGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="hsl(24, 88%, 36%)" stopOpacity={0.4} />
+                      <stop offset="95%" stopColor="hsl(24, 88%, 36%)" stopOpacity={0.0} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
+                  <XAxis 
+                    dataKey="date" 
+                    tick={{ fill: 'hsl(var(--foreground))', fontSize: 11, fontWeight: 600 }} 
+                    axisLine={{ stroke: 'hsl(var(--border))' }}
+                    tickLine={false} 
                   />
-                  <span>{item.name}: {item.value}%</span>
+                  <YAxis 
+                    domain={[60, 100]} 
+                    tick={{ fill: 'hsl(var(--foreground))', fontSize: 11, fontWeight: 600 }} 
+                    axisLine={{ stroke: 'hsl(var(--border))' }}
+                    tickLine={false} 
+                  />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'hsl(var(--card))', 
+                      borderColor: 'hsl(var(--border))', 
+                      borderRadius: '8px', 
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      color: 'hsl(var(--foreground))',
+                      boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+                    }} 
+                  />
+                  <Area 
+                    type="monotone" 
+                    dataKey="nps" 
+                    name="Estate NPS"
+                    stroke="hsl(24, 88%, 36%)" 
+                    strokeWidth={3} 
+                    fillOpacity={1} 
+                    fill="url(#npsGradient)" 
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Sentiment Breakdown Pie */}
+        <Card className="border-border bg-card shadow-xs flex flex-col justify-between">
+          <CardHeader className="pb-2 border-b border-border/60">
+            <CardTitle className="text-base font-serif font-bold text-foreground">
+              Sentiment Distribution
+            </CardTitle>
+            <CardDescription className="text-xs text-muted-foreground font-medium">
+              AI classified vector breakdown across {kpis.reviewVolume} stay surveys
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-col items-center justify-center pt-4">
+            <div className="h-[180px] w-full flex items-center justify-center">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={sentimentData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={50}
+                    outerRadius={75}
+                    paddingAngle={3}
+                    dataKey="value"
+                  >
+                    {sentimentData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'hsl(var(--card))', 
+                      borderColor: 'hsl(var(--border))', 
+                      borderRadius: '8px', 
+                      fontSize: '12px',
+                      fontWeight: 600,
+                    }} 
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+
+            <div className="w-full space-y-2 pt-3 border-t border-border/80 text-xs">
+              {sentimentData.map(item => (
+                <div key={item.name} className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="h-3 w-3 rounded-full shadow-2xs" style={{ backgroundColor: item.color }} />
+                    <span className="text-foreground font-medium">{item.name}</span>
+                  </div>
+                  <span className="font-bold text-foreground">{item.value}%</span>
                 </div>
               ))}
             </div>
@@ -166,143 +277,110 @@ export default function ManagerDashboard() {
         </Card>
       </div>
 
-      {/* Alerts & Insights */}
-      <div className="mt-6 grid gap-6 lg:grid-cols-2">
-        {/* Alerts */}
-        <Card>
-          <CardHeader>
+      {/* Multi-Property Luxury Benchmark Bar Chart */}
+      <div className="grid gap-6 lg:grid-cols-3 mb-6">
+        <Card className="lg:col-span-2 border-border bg-card shadow-xs">
+          <CardHeader className="pb-2 border-b border-border/60">
             <div className="flex items-center justify-between">
               <div>
-                <CardTitle>Active Alerts</CardTitle>
-                <CardDescription>Items requiring attention</CardDescription>
+                <CardTitle className="text-base font-serif font-bold text-foreground">
+                  Distinguished Estates • NPS Benchmarks
+                </CardTitle>
+                <CardDescription className="text-xs text-muted-foreground font-medium">
+                  Comparative performance across the Italian luxury collection
+                </CardDescription>
               </div>
-              <Button variant="outline" size="sm">View All</Button>
+              <Badge variant="outline" className="text-xs font-bold border-border">
+                Standard &gt; 80
+              </Badge>
             </div>
           </CardHeader>
-          <CardContent className="space-y-3">
-            {alerts.slice(0, 3).map(alert => (
-              <AlertItem key={alert.id} alert={alert} />
-            ))}
+          <CardContent>
+            <div className="h-[220px] w-full pt-4">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={propertyBenchmarkData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
+                  <XAxis 
+                    dataKey="name" 
+                    tick={{ fill: 'hsl(var(--foreground))', fontSize: 11, fontWeight: 600 }} 
+                    axisLine={{ stroke: 'hsl(var(--border))' }}
+                    tickLine={false} 
+                  />
+                  <YAxis 
+                    domain={[70, 100]} 
+                    tick={{ fill: 'hsl(var(--foreground))', fontSize: 11, fontWeight: 600 }} 
+                    axisLine={{ stroke: 'hsl(var(--border))' }}
+                    tickLine={false} 
+                  />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'hsl(var(--card))', 
+                      borderColor: 'hsl(var(--border))', 
+                      borderRadius: '8px', 
+                      fontSize: '12px',
+                      fontWeight: 600,
+                    }} 
+                  />
+                  <Bar dataKey="nps" name="NPS Benchmark" radius={[4, 4, 0, 0]}>
+                    {propertyBenchmarkData.map((entry, index) => (
+                      <Cell 
+                        key={`bar-${index}`} 
+                        fill={entry.nps >= 90 ? 'hsl(24, 88%, 36%)' : 'hsl(215, 25%, 45%)'} 
+                      />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
           </CardContent>
         </Card>
 
-        {/* AI Insights Placeholder */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <CardTitle>AI Insights</CardTitle>
-                <Badge variant="secondary">Beta</Badge>
-              </div>
-              <Sparkles className="h-5 w-5 text-primary" />
+        {/* AI Strategic Synthesis Panel */}
+        <Card className="border-border bg-card shadow-xs flex flex-col justify-between">
+          <CardHeader className="pb-2 border-b border-border/60">
+            <div className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-primary" />
+              <CardTitle className="text-base font-serif font-bold text-foreground">
+                Executive AI Synthesis
+              </CardTitle>
             </div>
-            <CardDescription>Automatically generated observations</CardDescription>
+            <CardDescription className="text-xs text-muted-foreground font-medium">
+              Algorithmic pattern recognition from recent stay surveys
+            </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-3">
-            <InsightCard 
-              title="Check-in Experience Alert"
-              description="Check-in complaints increased 30% this month compared to last. Consider reviewing front desk processes."
-              type="warning"
-            />
-            <InsightCard 
-              title="Spa Upsell Opportunity"
-              description="23% of positive reviews mention spa services. Consider targeted promotion to recent positive guests."
-              type="opportunity"
-            />
-            <InsightCard 
-              title="Response Time Impact"
-              description="Guests who received responses within 24h show 15% higher rebooking rate."
-              type="insight"
-            />
+          <CardContent className="space-y-3 text-xs pt-4">
+            <div className="p-3 rounded-lg border border-border bg-muted/40 space-y-1">
+              <div className="font-bold text-foreground flex items-center gap-1.5">
+                <Building2 className="h-3.5 w-3.5 text-primary" />
+                Villa d'Este • Acoustic Quiet Hours
+              </div>
+              <p className="text-foreground/80 leading-relaxed font-sans font-medium">
+                Early morning motorized blowers flagged near Queen Pavilion. Maintenance rescheduled to commence strictly at 09:30.
+              </p>
+            </div>
+
+            <div className="p-3 rounded-lg border border-border bg-muted/40 space-y-1">
+              <div className="font-bold text-foreground flex items-center gap-1.5">
+                <Award className="h-3.5 w-3.5 text-amber-600" />
+                Aman Venice • Discretion Benchmark
+              </div>
+              <p className="text-foreground/80 leading-relaxed font-sans font-medium">
+                100% promoter score regarding zero-voucher billing and private water gate arrivals at Palazzo Papadopoli.
+              </p>
+            </div>
+
+            <div className="p-3 rounded-lg border border-border bg-muted/40 space-y-1">
+              <div className="font-bold text-foreground flex items-center gap-1.5">
+                <ShieldCheck className="h-3.5 w-3.5 text-emerald-700" />
+                Belmond Caruso • Executive Reconciliation
+              </div>
+              <p className="text-foreground/80 leading-relaxed font-sans font-medium">
+                Mme de Rochechouart anniversary protocol failure addressed via private Capri charter compensation.
+              </p>
+            </div>
           </CardContent>
         </Card>
       </div>
     </MainLayout>
-  );
-}
-
-interface KpiCardProps {
-  title: string;
-  value: string | number;
-  trend?: number;
-  subtitle: string;
-  icon: React.ComponentType<{ className?: string }>;
-  warning?: boolean;
-}
-
-function KpiCard({ title, value, trend, subtitle, icon: Icon, warning }: KpiCardProps) {
-  const isPositive = trend !== undefined && trend > 0;
-  const isNegative = trend !== undefined && trend < 0;
-
-  return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between pb-2">
-        <CardTitle className="text-sm font-medium text-muted-foreground">
-          {title}
-        </CardTitle>
-        <Icon className={`h-4 w-4 ${warning ? 'text-warning' : 'text-muted-foreground'}`} />
-      </CardHeader>
-      <CardContent>
-        <div className="flex items-baseline gap-2">
-          <span className={`text-2xl font-bold ${warning ? 'text-warning' : ''}`}>
-            {value}
-          </span>
-          {trend !== undefined && (
-            <span className={`flex items-center text-xs ${isPositive ? 'text-success' : isNegative ? 'text-destructive' : 'text-muted-foreground'}`}>
-              {isPositive ? <TrendingUp className="mr-0.5 h-3 w-3" /> : isNegative ? <TrendingDown className="mr-0.5 h-3 w-3" /> : null}
-              {isPositive ? '+' : ''}{trend}%
-            </span>
-          )}
-        </div>
-        <p className="text-xs text-muted-foreground">{subtitle}</p>
-      </CardContent>
-    </Card>
-  );
-}
-
-interface AlertItemProps {
-  alert: typeof alerts[number];
-}
-
-function AlertItem({ alert }: AlertItemProps) {
-  const severityColors = {
-    low: 'bg-muted',
-    medium: 'bg-info',
-    high: 'bg-warning',
-    critical: 'bg-destructive',
-  };
-
-  return (
-    <div className="flex items-start gap-3 rounded-lg border p-3">
-      <span className={`mt-0.5 h-2 w-2 shrink-0 rounded-full ${severityColors[alert.severity]}`} />
-      <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium">{alert.title}</p>
-        <p className="text-xs text-muted-foreground line-clamp-2">{alert.message}</p>
-      </div>
-      <Button variant="ghost" size="sm" className="shrink-0">
-        <ArrowUpRight className="h-4 w-4" />
-      </Button>
-    </div>
-  );
-}
-
-interface InsightCardProps {
-  title: string;
-  description: string;
-  type: 'warning' | 'opportunity' | 'insight';
-}
-
-function InsightCard({ title, description, type }: InsightCardProps) {
-  const typeStyles = {
-    warning: 'border-l-warning',
-    opportunity: 'border-l-success',
-    insight: 'border-l-info',
-  };
-
-  return (
-    <div className={`rounded-lg border border-l-4 p-3 ${typeStyles[type]}`}>
-      <p className="text-sm font-medium">{title}</p>
-      <p className="mt-1 text-xs text-muted-foreground">{description}</p>
-    </div>
   );
 }
