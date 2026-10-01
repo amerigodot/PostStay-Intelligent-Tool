@@ -84,8 +84,8 @@ The working demo is configured with authentic multi-lingual post-stay reviews, g
 
 ### 1. Installation
 ```bash
-git clone https://github.com/amerigodot/PMS-hospitality-tool.git
-cd PMS-hospitality-tool
+git clone https://github.com/amerigodot/PostStay-Intelligent-Tool.git
+cd PostStay-Intelligent-Tool
 npm install
 ```
 
