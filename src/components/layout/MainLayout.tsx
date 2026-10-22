@@ -37,6 +37,7 @@ import { EstablishmentSelector } from '@/components/shared/EstablishmentSelector
 import { RoleSelector } from '@/components/shared/RoleSelector';
 import { PrivacyArchitectureModal } from '@/components/shared/PrivacyArchitectureModal';
 import { SimulateReviewDialog } from '@/components/shared/SimulateReviewDialog';
+import { ThemeToggle } from '@/components/shared/ThemeToggle';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -76,52 +77,13 @@ export function MainLayout({ children, title, breadcrumbs }: MainLayoutProps) {
           {/* Header Bar with High Contrast & Unified Navigation */}
           <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-border bg-card/95 backdrop-blur px-3 md:px-4 z-10 shadow-2xs">
             {/* Left Context Controls */}
-            <div className="flex items-center gap-2 min-w-0">
+            <div className="flex items-center gap-2 shrink-0">
               <SidebarTrigger className="h-8 w-8 text-foreground hover:bg-muted" />
               <Separator orientation="vertical" className="h-5 bg-border hidden sm:block" />
               
               {/* Primary Selectors: Estate & Role */}
               <EstablishmentSelector />
               <RoleSelector />
-
-              <Separator orientation="vertical" className="h-5 bg-border hidden lg:block" />
-
-              {/* Breadcrumbs for secondary location awareness */}
-              {breadcrumbs && breadcrumbs.length > 0 && (
-                <div className="hidden 2xl:block">
-                  <Breadcrumb>
-                    <BreadcrumbList className="text-xs font-medium text-muted-foreground">
-                      <BreadcrumbItem>
-                        <BreadcrumbLink 
-                          href={roleRouteMap[currentRole]}
-                          className="hover:text-foreground transition-colors"
-                        >
-                          {roleLabels[currentRole]}
-                        </BreadcrumbLink>
-                      </BreadcrumbItem>
-                      {breadcrumbs.map((crumb, index) => (
-                        <span key={crumb.label} className="contents">
-                          <BreadcrumbSeparator className="text-muted-foreground" />
-                          <BreadcrumbItem>
-                            {index === breadcrumbs.length - 1 ? (
-                              <BreadcrumbPage className="font-semibold text-foreground">
-                                {crumb.label}
-                              </BreadcrumbPage>
-                            ) : (
-                              <BreadcrumbLink 
-                                href={crumb.href} 
-                                className="hover:text-foreground transition-colors"
-                              >
-                                {crumb.label}
-                              </BreadcrumbLink>
-                            )}
-                          </BreadcrumbItem>
-                        </span>
-                      ))}
-                    </BreadcrumbList>
-                  </Breadcrumb>
-                </div>
-              )}
             </div>
 
             {/* Right Action Tools */}
@@ -190,6 +152,9 @@ export function MainLayout({ children, title, breadcrumbs }: MainLayoutProps) {
                   Zero-PII Privacy Architecture diagram
                 </TooltipContent>
               </Tooltip>
+
+              {/* Theme Toggle (Dark / Light Mode) */}
+              <ThemeToggle />
 
               {/* Notifications Dropdown */}
               <DropdownMenu>
@@ -291,6 +256,44 @@ export function MainLayout({ children, title, breadcrumbs }: MainLayoutProps) {
 
           {/* Main Dashboard Content */}
           <main className="flex-1 overflow-auto p-4 md:p-6 bg-background">
+            {breadcrumbs && breadcrumbs.length > 0 && (
+              <Breadcrumb className="mb-2">
+                <BreadcrumbList className="text-xs font-medium text-muted-foreground">
+                  <BreadcrumbItem>
+                    <BreadcrumbLink 
+                      href={roleRouteMap[currentRole]}
+                      className="hover:text-foreground transition-colors font-medium"
+                    >
+                      {roleLabels[currentRole]}
+                    </BreadcrumbLink>
+                  </BreadcrumbItem>
+                  {breadcrumbs
+                    .filter(crumb => 
+                      crumb.label.toLowerCase() !== currentRole.toLowerCase() && 
+                      crumb.label.toLowerCase() !== roleLabels[currentRole].toLowerCase()
+                    )
+                    .map((crumb, index, arr) => (
+                      <span key={crumb.label} className="contents">
+                        <BreadcrumbSeparator className="text-muted-foreground" />
+                        <BreadcrumbItem>
+                          {index === arr.length - 1 ? (
+                            <BreadcrumbPage className="font-semibold text-foreground">
+                              {crumb.label}
+                            </BreadcrumbPage>
+                          ) : (
+                            <BreadcrumbLink 
+                              href={crumb.href} 
+                              className="hover:text-foreground transition-colors"
+                            >
+                              {crumb.label}
+                            </BreadcrumbLink>
+                          )}
+                        </BreadcrumbItem>
+                      </span>
+                    ))}
+                </BreadcrumbList>
+              </Breadcrumb>
+            )}
             {title && (
               <div className="mb-6 flex flex-col gap-1 border-b border-border/60 pb-3">
                 <h1 className="text-2xl font-serif font-bold tracking-tight text-foreground">{title}</h1>

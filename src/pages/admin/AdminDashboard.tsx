@@ -174,12 +174,12 @@ export default function AdminDashboard() {
           {activeTab === 'audit' && (
             <div className="space-y-3">
               <div className="relative w-full sm:w-80 pb-1">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   placeholder="Filter audit actions, users, entities..."
                   value={searchAudit}
                   onChange={(e) => setSearchAudit(e.target.value)}
-                  className="pl-8.5 text-xs h-9 bg-card border-border text-foreground font-medium placeholder:text-muted-foreground shadow-2xs"
+                  className="pl-9 text-xs h-9 bg-card border-border text-foreground font-medium placeholder:text-muted-foreground shadow-2xs"
                 />
               </div>
 
