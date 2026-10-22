@@ -37,9 +37,9 @@
     --destructive: 0 80% 42%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Defined architectural borders (No faint or washed-out lines) */
-    --border: 214 30% 78%; /* #bcc9da */
-    --input: 214 30% 78%;
+    /* Defined architectural borders (Crisp definition, WCAG 3:1 contrast) */
+    --border: 215 25% 68%; /* #8b9db5 crisp structural borders */
+    --input: 215 25% 68%;
     --ring: 24 88% 36%;
 
     --radius: 0.5rem;
@@ -51,7 +51,7 @@
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 216 25% 90%;
     --sidebar-accent-foreground: 222 47% 11%;
-    --sidebar-border: 214 28% 82%;
+    --sidebar-border: 215 25% 68%;
     --sidebar-ring: 24 88% 36%;
 
     /* High-contrast status indicators */
@@ -100,8 +100,8 @@
     --destructive: 0 75% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 22% 20%;
-    --input: 220 22% 20%;
+    --border: 220 20% 28%;
+    --input: 220 20% 28%;
     --ring: 24 88% 54%;
 
     --sidebar-background: 224 35% 7%;
@@ -110,7 +110,7 @@
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 220 22% 15%;
     --sidebar-accent-foreground: 210 30% 98%;
-    --sidebar-border: 220 22% 18%;
+    --sidebar-border: 220 20% 26%;
     --sidebar-ring: 24 88% 54%;
 
     --success: 152 75% 40%;

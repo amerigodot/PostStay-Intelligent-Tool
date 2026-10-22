@@ -88,7 +88,7 @@ export function MainLayout({ children, title, breadcrumbs }: MainLayoutProps) {
 
               {/* Breadcrumbs for secondary location awareness */}
               {breadcrumbs && breadcrumbs.length > 0 && (
-                <div className="hidden xl:block">
+                <div className="hidden 2xl:block">
                   <Breadcrumb>
                     <BreadcrumbList className="text-xs font-medium text-muted-foreground">
                       <BreadcrumbItem>
@@ -144,8 +144,8 @@ export function MainLayout({ children, title, breadcrumbs }: MainLayoutProps) {
                     ) : (
                       <Unlock className="h-3.5 w-3.5 text-amber-700 dark:text-amber-400" />
                     )}
-                    <span className="hidden sm:inline">
-                      {privacyMode === 'pseudonymized' ? 'Vault Shield: Active' : 'Staff Mode: Unmasked'}
+                    <span className="hidden md:inline">
+                      {privacyMode === 'pseudonymized' ? 'Vault Shield' : 'Staff Mode'}
                     </span>
                   </Button>
                 </TooltipTrigger>
@@ -157,25 +157,39 @@ export function MainLayout({ children, title, breadcrumbs }: MainLayoutProps) {
               </Tooltip>
 
               {/* Simulate Review Event - High Contrast Primary Action */}
-              <Button 
-                size="sm" 
-                onClick={() => setSimulateOpen(true)}
-                className="h-9 gap-1.5 text-xs font-semibold bg-primary text-primary-foreground shadow-xs hover:bg-primary/90"
-              >
-                <Radio className="h-3.5 w-3.5 text-primary-foreground animate-pulse" />
-                <span className="hidden sm:inline">Simulate Event</span>
-              </Button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button 
+                    size="sm" 
+                    onClick={() => setSimulateOpen(true)}
+                    className="h-9 px-2.5 sm:px-3 gap-1.5 text-xs font-semibold bg-primary text-primary-foreground shadow-xs hover:bg-primary/90"
+                  >
+                    <Radio className="h-3.5 w-3.5 text-primary-foreground animate-pulse" />
+                    <span className="hidden lg:inline">Simulate Event</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="bottom" className="text-xs">
+                  Inject live PMS review simulation
+                </TooltipContent>
+              </Tooltip>
 
               {/* Privacy Architecture Visualizer */}
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={() => setArchModalOpen(true)}
-                className="h-9 gap-1.5 text-xs font-semibold border-border bg-card text-foreground shadow-xs hover:bg-muted"
-              >
-                <Sparkles className="h-3.5 w-3.5 text-primary" />
-                <span className="hidden md:inline">Architecture</span>
-              </Button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => setArchModalOpen(true)}
+                    className="h-9 px-2.5 sm:px-3 gap-1.5 text-xs font-semibold border-border bg-card text-foreground shadow-xs hover:bg-muted"
+                  >
+                    <Sparkles className="h-3.5 w-3.5 text-primary" />
+                    <span className="hidden xl:inline">Architecture</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="bottom" className="text-xs">
+                  Zero-PII Privacy Architecture diagram
+                </TooltipContent>
+              </Tooltip>
 
               {/* Notifications Dropdown */}
               <DropdownMenu>

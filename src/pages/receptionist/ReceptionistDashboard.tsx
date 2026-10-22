@@ -126,23 +126,22 @@ export default function ReceptionistDashboard() {
         {/* Metric 1: Check-Out Notices */}
         <Card 
           onClick={() => setActiveTab('checkouts')}
-          className={`cursor-pointer transition-all border shadow-xs hover:border-sky-500/60 ${
-            activeTab === 'checkouts' ? 'ring-2 ring-sky-500/30 border-sky-500 bg-sky-50/20 dark:bg-sky-950/10' : 'border-border bg-card'
+          className={`cursor-pointer transition-all border shadow-xs hover:shadow-sm ${
+            activeTab === 'checkouts' ? 'ring-2 ring-sky-500 border-sky-500 bg-sky-50/40 dark:bg-sky-950/20' : 'border-border bg-card hover:border-foreground/30'
           }`}
         >
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-              1. Check-Out Notices
+          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0 p-4">
+            <CardTitle className="text-xs font-bold uppercase tracking-wider text-muted-foreground truncate">
+              1. Check-Outs
             </CardTitle>
-            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-sky-100 dark:bg-sky-950 text-sky-800 dark:text-sky-300">
+            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-sky-100 dark:bg-sky-950 text-sky-800 dark:text-sky-300">
               <ArrowDownRight className="h-4 w-4" />
             </div>
           </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold font-serif text-foreground">{recentDepartures.length}</div>
-            <p className="text-xs font-medium text-muted-foreground mt-1 flex items-center gap-1">
-              <Clock className="h-3 w-3 text-sky-600 dark:text-sky-400" />
-              Micro-surveys dispatched (T+2h)
+          <CardContent className="p-4 pt-0">
+            <div className="text-2xl sm:text-3xl font-bold font-serif text-foreground leading-tight">{recentDepartures.length}</div>
+            <p className="text-xs font-medium text-muted-foreground mt-1 truncate">
+              T+2h survey pipeline
             </p>
           </CardContent>
         </Card>
@@ -150,22 +149,22 @@ export default function ReceptionistDashboard() {
         {/* Metric 2: In-House Status */}
         <Card 
           onClick={() => setActiveTab('in-house')}
-          className={`cursor-pointer transition-all border shadow-xs hover:border-primary/60 ${
-            activeTab === 'in-house' ? 'ring-2 ring-primary/30 border-primary bg-primary/5' : 'border-border bg-card'
+          className={`cursor-pointer transition-all border shadow-xs hover:shadow-sm ${
+            activeTab === 'in-house' ? 'ring-2 ring-primary border-primary bg-primary/5' : 'border-border bg-card hover:border-foreground/30'
           }`}
         >
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-              2. In-House Status
+          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0 p-4">
+            <CardTitle className="text-xs font-bold uppercase tracking-wider text-muted-foreground truncate">
+              2. In-House
             </CardTitle>
-            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10 text-primary">
+            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">
               <Hotel className="h-4 w-4" />
             </div>
           </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold font-serif text-foreground">{currentStays.length}</div>
-            <p className="text-xs font-medium text-muted-foreground mt-1">
-              {activeProperty ? `Suites at ${activeProperty.name}` : 'Active suites across portfolio'}
+          <CardContent className="p-4 pt-0">
+            <div className="text-2xl sm:text-3xl font-bold font-serif text-foreground leading-tight">{currentStays.length}</div>
+            <p className="text-xs font-medium text-muted-foreground mt-1 truncate">
+              {activeProperty ? activeProperty.name : 'Active portfolio suites'}
             </p>
           </CardContent>
         </Card>
@@ -173,25 +172,24 @@ export default function ReceptionistDashboard() {
         {/* Metric 3: Expected Check-Ins */}
         <Card 
           onClick={() => setActiveTab('checkin-upsell')}
-          className={`cursor-pointer transition-all border shadow-xs hover:border-emerald-500/60 ${
-            activeTab === 'checkin-upsell' ? 'ring-2 ring-emerald-500/30 border-emerald-500 bg-emerald-50/20 dark:bg-emerald-950/10' : 'border-border bg-card'
+          className={`cursor-pointer transition-all border shadow-xs hover:shadow-sm ${
+            activeTab === 'checkin-upsell' ? 'ring-2 ring-emerald-500 border-emerald-500 bg-emerald-50/40 dark:bg-emerald-950/20' : 'border-border bg-card hover:border-foreground/30'
           }`}
         >
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-              3. Expected Check-Ins
+          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0 p-4">
+            <CardTitle className="text-xs font-bold uppercase tracking-wider text-muted-foreground truncate">
+              3. Arrivals
             </CardTitle>
-            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">
+            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">
               <ArrowUpRight className="h-4 w-4" />
             </div>
           </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold font-serif text-emerald-800 dark:text-emerald-400">
+          <CardContent className="p-4 pt-0">
+            <div className="text-2xl sm:text-3xl font-bold font-serif text-emerald-800 dark:text-emerald-400 leading-tight">
               {upcomingStays.length}
             </div>
-            <p className="text-xs font-medium text-muted-foreground mt-1 flex items-center gap-1">
-              <Check className="h-3 w-3 text-emerald-600" />
-              Arrival preparations complete
+            <p className="text-xs font-medium text-muted-foreground mt-1 truncate">
+              Arrival prep complete
             </p>
           </CardContent>
         </Card>
@@ -199,24 +197,24 @@ export default function ReceptionistDashboard() {
         {/* Metric 4: Upsell Suggestions */}
         <Card 
           onClick={() => setActiveTab('checkin-upsell')}
-          className={`cursor-pointer transition-all border shadow-xs hover:border-amber-500/60 ${
-            activeTab === 'checkin-upsell' ? 'ring-2 ring-amber-500/30 border-amber-500 bg-amber-50/20 dark:bg-amber-950/10' : 'border-border bg-card'
+          className={`cursor-pointer transition-all border shadow-xs hover:shadow-sm ${
+            activeTab === 'checkin-upsell' ? 'ring-2 ring-amber-500 border-amber-500 bg-amber-50/40 dark:bg-amber-950/20' : 'border-border bg-card hover:border-foreground/30'
           }`}
         >
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-              Active Upsells
+          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0 p-4">
+            <CardTitle className="text-xs font-bold uppercase tracking-wider text-muted-foreground truncate">
+              4. Upsell Queue
             </CardTitle>
-            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-400">
+            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-400">
               <Sparkles className="h-4 w-4" />
             </div>
           </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold font-serif text-amber-800 dark:text-amber-400">
+          <CardContent className="p-4 pt-0">
+            <div className="text-2xl sm:text-3xl font-bold font-serif text-amber-800 dark:text-amber-400 leading-tight">
               {activeUpsells.length}
             </div>
-            <p className="text-xs font-medium text-muted-foreground mt-1">
-              High-confidence AI upgrade prompts
+            <p className="text-xs font-medium text-muted-foreground mt-1 truncate">
+              Active AI opportunities
             </p>
           </CardContent>
         </Card>
@@ -252,37 +250,49 @@ export default function ReceptionistDashboard() {
           {/* Sequential Usage Pattern Navigation */}
           <div className="pt-4">
             <Tabs value={activeTab} onValueChange={(val) => setActiveTab(val as OperationalTab)} className="w-full">
-              <TabsList className="h-10 bg-muted/80 border border-border p-1 w-full sm:w-auto grid grid-cols-2 lg:grid-cols-4 gap-1">
+              <TabsList className="h-auto min-h-10 bg-muted border border-border p-1 w-full flex flex-wrap sm:flex-nowrap gap-1.5">
                 <TabsTrigger 
                   value="checkouts" 
-                  className="text-xs px-3 font-semibold data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-xs"
+                  className="flex-1 py-2 px-2.5 sm:px-3 text-xs font-semibold data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-xs transition-all flex items-center justify-center gap-1.5 shrink-0"
                 >
-                  <ArrowDownRight className="h-3.5 w-3.5 mr-1.5 text-sky-600 dark:text-sky-400" />
-                  1. Check-Out Notices ({recentDepartures.length})
+                  <ArrowDownRight className="h-3.5 w-3.5 text-sky-600 dark:text-sky-400 shrink-0" />
+                  <span>1. Check-Outs</span>
+                  <span className="px-1.5 py-0.2 rounded-full text-[10px] font-mono font-bold bg-muted-foreground/15">
+                    {recentDepartures.length}
+                  </span>
                 </TabsTrigger>
 
                 <TabsTrigger 
                   value="in-house" 
-                  className="text-xs px-3 font-semibold data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-xs"
+                  className="flex-1 py-2 px-2.5 sm:px-3 text-xs font-semibold data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-xs transition-all flex items-center justify-center gap-1.5 shrink-0"
                 >
-                  <Hotel className="h-3.5 w-3.5 mr-1.5 text-primary" />
-                  2. In-House Status ({currentStays.length})
+                  <Hotel className="h-3.5 w-3.5 text-primary shrink-0" />
+                  <span>2. In-House</span>
+                  <span className="px-1.5 py-0.2 rounded-full text-[10px] font-mono font-bold bg-muted-foreground/15">
+                    {currentStays.length}
+                  </span>
                 </TabsTrigger>
 
                 <TabsTrigger 
                   value="checkin-upsell" 
-                  className="text-xs px-3 font-semibold data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-xs"
+                  className="flex-1 py-2 px-2.5 sm:px-3 text-xs font-semibold data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-xs transition-all flex items-center justify-center gap-1.5 shrink-0"
                 >
-                  <Sparkles className="h-3.5 w-3.5 mr-1.5 text-amber-600 dark:text-amber-400" />
-                  3. Check-In & Upsell ({upcomingStays.length} • {activeUpsells.length})
+                  <Sparkles className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
+                  <span>3. Check-In & Upsell</span>
+                  <span className="px-1.5 py-0.2 rounded-full text-[10px] font-mono font-bold bg-amber-500/20 text-amber-800 dark:text-amber-300">
+                    {upcomingStays.length} • {activeUpsells.length}
+                  </span>
                 </TabsTrigger>
 
                 <TabsTrigger 
                   value="directory" 
-                  className="text-xs px-3 font-semibold data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-xs"
+                  className="flex-1 py-2 px-2.5 sm:px-3 text-xs font-semibold data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-xs transition-all flex items-center justify-center gap-1.5 shrink-0"
                 >
-                  <Users className="h-3.5 w-3.5 mr-1.5 text-muted-foreground" />
-                  Patron Directory ({filteredGuestList.length})
+                  <Users className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+                  <span>Directory</span>
+                  <span className="px-1.5 py-0.2 rounded-full text-[10px] font-mono font-bold bg-muted-foreground/15">
+                    {filteredGuestList.length}
+                  </span>
                 </TabsTrigger>
               </TabsList>
             </Tabs>
@@ -320,47 +330,47 @@ export default function ReceptionistDashboard() {
                     return (
                       <div 
                         key={stay.id} 
-                        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-lg border border-border bg-card hover:border-foreground/30 transition-all shadow-2xs"
+                        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-lg border border-border bg-card hover:border-foreground/40 transition-all shadow-xs hover:shadow-sm"
                       >
                         {/* Left Metadata Block */}
                         <div className="min-w-0 flex-1 space-y-2">
                           {/* Row 1: Identity & Departure Info */}
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <span className="font-bold text-sm text-foreground">
+                          <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+                            <span className="font-bold text-sm text-foreground shrink-0">
                               {renderGuestName(guest)}
                             </span>
-                            <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-muted text-foreground border border-border">
+                            <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-muted text-foreground border border-border shrink-0">
                               {guest.pseudonymizedKey}
                             </span>
-                            <Badge variant="outline" className="text-xs font-semibold border-border">
+                            <Badge variant="outline" className="text-xs font-semibold border-border shrink-0">
                               {stay.roomType} • {stay.roomNumber}
                             </Badge>
-                            <span className="text-xs text-muted-foreground font-medium">
+                            <span className="text-xs text-muted-foreground font-medium shrink-0">
                               Departed: <strong className="text-foreground">{stay.checkOut}</strong>
                             </span>
-                            <span className="text-xs font-bold text-foreground">
+                            <span className="text-xs font-bold text-foreground shrink-0">
                               €{stay.totalSpend.toLocaleString()} Folio
                             </span>
                           </div>
 
                           {/* Row 2: Post-Stay Micro-Survey & Sentiment Status */}
-                          <div className="flex items-center gap-2 flex-wrap pt-0.5">
+                          <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 pt-0.5">
                             {fb ? (
                               <>
-                                <Badge className="bg-emerald-700 dark:bg-emerald-600 text-white font-semibold text-xs gap-1.5 shadow-2xs">
+                                <Badge className="bg-emerald-700 dark:bg-emerald-600 text-white font-semibold text-xs gap-1.5 shadow-xs shrink-0">
                                   <CheckCircle2 className="h-3.5 w-3.5" />
                                   Feedback Captured
                                 </Badge>
                                 {fb.nps !== undefined && <NpsScoreBadge score={fb.nps} showLabel size="sm" />}
                                 <SentimentBadge sentiment={fb.sentiment} showLabel size="sm" />
                                 {fb.comment && (
-                                  <span className="text-xs text-foreground/80 italic truncate max-w-md bg-muted/40 px-2 py-0.5 rounded border border-border/50">
+                                  <span className="text-xs text-foreground/85 italic truncate max-w-full sm:max-w-md bg-muted/40 px-2 py-0.5 rounded border border-border">
                                     "{fb.comment}"
                                   </span>
                                 )}
                               </>
                             ) : (
-                              <Badge variant="outline" className="border-sky-500/70 text-sky-800 dark:text-sky-300 bg-sky-50 dark:bg-sky-950/30 text-xs font-semibold gap-1.5">
+                              <Badge variant="outline" className="border-sky-500/70 text-sky-800 dark:text-sky-300 bg-sky-50 dark:bg-sky-950/30 text-xs font-semibold gap-1.5 shrink-0">
                                 <Clock className="h-3.5 w-3.5 text-sky-600 animate-pulse" />
                                 Micro-Survey Dispatched (T+2h) • Awaiting Response
                               </Badge>
@@ -369,19 +379,19 @@ export default function ReceptionistDashboard() {
 
                           {/* Row 3: Staff/Stay Notes */}
                           {stay.notes && (
-                            <p className="text-xs text-foreground/85 bg-muted/30 p-2 rounded border border-border/50 italic">
+                            <p className="text-xs text-foreground/85 bg-muted/30 p-2 rounded border border-border italic">
                               "{stay.notes}"
                             </p>
                           )}
                         </div>
 
                         {/* Right Action Rail (Strictly Aligned) */}
-                        <div className="flex items-center gap-2 shrink-0 sm:self-center">
+                        <div className="flex items-center gap-2 shrink-0 self-start sm:self-center pt-2 sm:pt-0">
                           <Button 
                             size="sm" 
                             variant="outline" 
                             onClick={() => setSelectedGuestForDossier(guest)}
-                            className="h-8 text-xs font-semibold px-3.5 border-border bg-card text-foreground hover:bg-muted shadow-2xs gap-1.5"
+                            className="h-8 px-3 text-xs font-semibold border border-border bg-card text-foreground hover:bg-muted hover:border-foreground/40 active:scale-[0.98] shadow-xs gap-1.5 transition-all shrink-0"
                           >
                             <UserCheck className="h-3.5 w-3.5 text-primary" />
                             View Dossier
@@ -424,23 +434,23 @@ export default function ReceptionistDashboard() {
                     return (
                       <div 
                         key={stay.id} 
-                        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-lg border border-border bg-card hover:border-foreground/30 transition-all shadow-2xs"
+                        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-lg border border-border bg-card hover:border-foreground/40 transition-all shadow-xs hover:shadow-sm"
                       >
                         {/* Left Metadata Block */}
                         <div className="min-w-0 flex-1 space-y-2">
                           {/* Row 1: Identity & Key Badges */}
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <span className="font-bold text-base text-foreground">
+                          <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+                            <span className="font-bold text-base text-foreground shrink-0">
                               {renderGuestName(guest)}
                             </span>
-                            <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-muted text-foreground border border-border">
+                            <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-muted text-foreground border border-border shrink-0">
                               {guest.pseudonymizedKey}
                             </span>
-                            <Badge variant="outline" className="border-primary/40 text-primary font-bold text-xs bg-card">
+                            <Badge variant="outline" className="border-primary/50 text-primary font-bold text-xs bg-card shrink-0">
                               {stay.roomType} • {stay.roomNumber}
                             </Badge>
                             {guest.vipTier && (
-                              <Badge variant="outline" className="border-amber-600/50 text-amber-800 dark:text-amber-300 bg-amber-50/50 dark:bg-amber-950/20 text-xs font-bold gap-1">
+                              <Badge variant="outline" className="border-amber-600/50 text-amber-800 dark:text-amber-300 bg-amber-50/50 dark:bg-amber-950/20 text-xs font-bold gap-1 shrink-0">
                                 <Star className="h-3 w-3 fill-amber-500 text-amber-500" />
                                 {guest.vipTier}
                               </Badge>
@@ -450,13 +460,13 @@ export default function ReceptionistDashboard() {
                           </div>
 
                           {/* Row 2: Stay Duration & Preferences */}
-                          <div className="flex items-center gap-2 text-xs text-muted-foreground flex-wrap">
-                            <span className="flex items-center gap-1 font-semibold text-foreground">
+                          <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs text-muted-foreground font-medium">
+                            <span className="flex items-center gap-1 font-semibold text-foreground shrink-0">
                               <Calendar className="h-3.5 w-3.5 text-primary" />
                               {stay.checkIn} → {stay.checkOut}
                             </span>
                             <span>•</span>
-                            <span className="font-medium">
+                            <span className="shrink-0">
                               {guest.totalStays} Stays (LTV: <strong className="text-foreground">€{guest.lifetimeValue.toLocaleString()}</strong>)
                             </span>
                             {guest.preferences.length > 0 && (
@@ -464,7 +474,7 @@ export default function ReceptionistDashboard() {
                                 <span>•</span>
                                 <div className="flex items-center gap-1 flex-wrap">
                                   {guest.preferences.slice(0, 3).map(pref => (
-                                    <Badge key={pref} variant="secondary" className="text-[11px] capitalize font-medium border border-border/80">
+                                    <Badge key={pref} variant="secondary" className="text-[11px] capitalize font-medium border border-border">
                                       {pref.replace(/-/g, ' ')}
                                     </Badge>
                                   ))}
@@ -480,19 +490,19 @@ export default function ReceptionistDashboard() {
 
                           {/* Row 3: Concierge In-House Notes */}
                           {stay.notes && (
-                            <p className="text-xs text-foreground/90 bg-muted/40 p-2.5 rounded border border-border/60 italic">
+                            <p className="text-xs text-foreground/90 bg-muted/40 p-2.5 rounded border border-border italic">
                               "{stay.notes}"
                             </p>
                           )}
                         </div>
 
                         {/* Right Action Rail (Strictly Aligned) */}
-                        <div className="flex items-center gap-2 shrink-0 sm:self-center">
+                        <div className="flex items-center gap-2 shrink-0 self-start sm:self-center pt-2 sm:pt-0">
                           <Button 
                             size="sm" 
                             variant="outline" 
                             onClick={() => setSelectedGuestForDossier(guest)}
-                            className="h-8 text-xs font-semibold px-3.5 border-border bg-card text-foreground hover:bg-muted shadow-2xs gap-1.5"
+                            className="h-8 px-3 text-xs font-semibold border border-border bg-card text-foreground hover:bg-muted hover:border-foreground/40 active:scale-[0.98] shadow-xs gap-1.5 transition-all shrink-0"
                           >
                             <UserCheck className="h-3.5 w-3.5 text-primary" />
                             View Dossier
@@ -545,22 +555,22 @@ export default function ReceptionistDashboard() {
                       return (
                         <div 
                           key={stay.id} 
-                          className="p-4 rounded-lg border border-emerald-600/40 bg-emerald-50/15 dark:bg-emerald-950/10 shadow-2xs space-y-3"
+                          className="p-4 rounded-lg border-2 border-emerald-600/40 bg-emerald-50/15 dark:bg-emerald-950/10 shadow-xs space-y-3"
                         >
                           {/* Arrival Top Header */}
-                          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                            <div className="flex items-center gap-2 flex-wrap">
-                              <span className="font-bold text-base text-foreground">
+                          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-border">
+                            <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+                              <span className="font-bold text-base text-foreground shrink-0">
                                 {renderGuestName(guest)}
                               </span>
-                              <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-muted text-foreground border border-border">
+                              <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-muted text-foreground border border-border shrink-0">
                                 {guest.pseudonymizedKey}
                               </span>
-                              <Badge variant="outline" className="text-xs font-semibold border-border">
+                              <Badge variant="outline" className="text-xs font-semibold border-border shrink-0">
                                 {stay.roomType} • {stay.roomNumber}
                               </Badge>
                               {guest.vipTier && (
-                                <Badge variant="outline" className="border-amber-600/50 text-amber-800 dark:text-amber-300 bg-amber-50/50 dark:bg-amber-950/20 text-xs font-bold gap-1">
+                                <Badge variant="outline" className="border-amber-600/50 text-amber-800 dark:text-amber-300 bg-amber-50/50 dark:bg-amber-950/20 text-xs font-bold gap-1 shrink-0">
                                   <Star className="h-3 w-3 fill-amber-500 text-amber-500" />
                                   {guest.vipTier}
                                 </Badge>
@@ -568,12 +578,12 @@ export default function ReceptionistDashboard() {
                             </div>
 
                             {/* Aligned Arrival Action Button */}
-                            <div className="flex items-center gap-2 shrink-0">
+                            <div className="flex items-center gap-2 shrink-0 self-start sm:self-center">
                               <Button 
                                 size="sm" 
                                 variant="outline" 
                                 onClick={() => setSelectedGuestForDossier(guest)}
-                                className="h-8 text-xs font-semibold px-3 border-border bg-card text-foreground hover:bg-muted shadow-2xs gap-1.5"
+                                className="h-8 px-3 text-xs font-semibold border border-border bg-card text-foreground hover:bg-muted hover:border-foreground/40 active:scale-[0.98] shadow-xs gap-1.5 transition-all shrink-0"
                               >
                                 <UserCheck className="h-3.5 w-3.5 text-primary" />
                                 Arrival Dossier
@@ -582,7 +592,7 @@ export default function ReceptionistDashboard() {
                           </div>
 
                           {/* Logistics Sub-row */}
-                          <div className="text-xs text-muted-foreground flex items-center gap-2 flex-wrap font-medium">
+                          <div className="text-xs text-muted-foreground flex flex-wrap items-center gap-x-3 gap-y-1 font-medium">
                             <span>Check-in Date: <strong className="text-foreground">{stay.checkIn}</strong></span>
                             <span>•</span>
                             <span>Booking Channel: <strong className="text-foreground">{stay.bookingChannel}</strong></span>
@@ -592,46 +602,46 @@ export default function ReceptionistDashboard() {
 
                           {/* Arrival Notes */}
                           {stay.notes && (
-                            <p className="text-xs text-foreground/90 bg-card p-2.5 rounded border border-border/70 italic">
+                            <p className="text-xs text-foreground/90 bg-card p-2.5 rounded border border-border italic">
                               "{stay.notes}"
                             </p>
                           )}
 
                           {/* DIRECT AI UPSELL ATTACHMENT */}
                           {upsell ? (
-                            <div className="mt-3 p-3.5 rounded-lg border border-primary/40 bg-card shadow-2xs">
-                              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                            <div className="mt-3 p-4 rounded-lg border-2 border-primary/40 bg-card shadow-xs space-y-2">
+                              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-1">
                                 <div className="flex items-center gap-2 flex-wrap">
-                                  <Badge variant="outline" className="border-primary/60 text-primary font-bold text-xs gap-1 bg-primary/5">
+                                  <Badge variant="outline" className="border-primary/60 text-primary font-bold text-xs gap-1 bg-primary/5 shrink-0">
                                     <Sparkles className="h-3 w-3" />
                                     AI Upsell: {upsell.type.toUpperCase()}
                                   </Badge>
-                                  <span className="font-mono text-xs font-bold text-emerald-700 dark:text-emerald-400">
+                                  <span className="font-mono text-xs font-bold text-emerald-700 dark:text-emerald-400 shrink-0">
                                     {Math.round(upsell.confidence * 100)}% AI Match Confidence
                                   </span>
                                 </div>
-                                <span className="text-sm font-bold text-foreground">
+                                <span className="text-sm font-bold text-foreground shrink-0">
                                   {upsell.price ? `€${upsell.price.toLocaleString()}` : 'Complimentary Upgrade'}
                                 </span>
                               </div>
 
-                              <h5 className="font-serif font-bold text-sm text-foreground mb-1">
+                              <h5 className="font-serif font-bold text-sm text-foreground leading-snug">
                                 {upsell.title}
                               </h5>
-                              <p className="text-xs text-muted-foreground font-medium leading-relaxed mb-2">
+                              <p className="text-xs text-muted-foreground font-medium leading-relaxed">
                                 {upsell.description}
                               </p>
-                              <div className="text-[11px] text-muted-foreground font-medium mb-3">
+                              <div className="text-[11px] text-muted-foreground font-medium">
                                 Triggered by: <span className="text-foreground font-semibold">{upsell.basedOn}</span>
                               </div>
 
                               {/* Aligned Upsell Action Row */}
-                              <div className="flex items-center justify-end gap-2 border-t border-border/60 pt-2.5">
+                              <div className="flex items-center justify-end gap-2 border-t border-border pt-3 mt-3">
                                 {upsell.status === 'suggested' && (
                                   <Button 
                                     size="sm" 
                                     onClick={() => updateUpsellStatus(upsell.id, 'offered')}
-                                    className="h-8 text-xs font-semibold gap-1.5 bg-primary text-primary-foreground hover:bg-primary/90 shadow-2xs"
+                                    className="h-8 px-3 text-xs font-semibold gap-1.5 bg-primary text-primary-foreground hover:bg-primary/90 active:scale-[0.98] shadow-xs"
                                   >
                                     <Sparkles className="h-3.5 w-3.5" />
                                     Offer to Patron
@@ -642,7 +652,7 @@ export default function ReceptionistDashboard() {
                                     <Button 
                                       size="sm" 
                                       onClick={() => updateUpsellStatus(upsell.id, 'accepted')}
-                                      className="h-8 text-xs font-semibold gap-1.5 bg-emerald-700 hover:bg-emerald-800 text-white shadow-2xs"
+                                      className="h-8 px-3 text-xs font-semibold gap-1.5 bg-emerald-700 hover:bg-emerald-800 text-white active:scale-[0.98] shadow-xs"
                                     >
                                       <Check className="h-3.5 w-3.5" />
                                       Accept & Book
@@ -651,7 +661,7 @@ export default function ReceptionistDashboard() {
                                       size="sm" 
                                       variant="outline" 
                                       onClick={() => updateUpsellStatus(upsell.id, 'declined')}
-                                      className="h-8 text-xs font-semibold border-border shadow-2xs"
+                                      className="h-8 px-3 text-xs font-semibold border border-border bg-card text-foreground hover:bg-muted active:scale-[0.98] shadow-xs"
                                     >
                                       Decline
                                     </Button>
@@ -664,14 +674,14 @@ export default function ReceptionistDashboard() {
                                   </Badge>
                                 )}
                                 {upsell.status === 'declined' && (
-                                  <Badge variant="secondary" className="font-semibold text-xs py-1 px-3">
+                                  <Badge variant="secondary" className="font-semibold text-xs py-1 px-3 border border-border">
                                     Declined by Patron
                                   </Badge>
                                 )}
                               </div>
                             </div>
                           ) : (
-                            <div className="flex items-center gap-2 text-xs text-muted-foreground bg-card border border-border/60 rounded-md p-2.5 font-medium">
+                            <div className="flex items-center gap-2 text-xs text-muted-foreground bg-card border border-border rounded-md p-2.5 font-medium">
                               <Check className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
                               <span>Preferences verified • Room inspected and standard welcome protocol pre-set.</span>
                             </div>
@@ -808,19 +818,19 @@ export default function ReceptionistDashboard() {
                   return (
                     <div 
                       key={guest.id} 
-                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-lg border border-border bg-card hover:border-foreground/30 transition-all shadow-2xs"
+                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-lg border border-border bg-card hover:border-foreground/40 transition-all shadow-xs hover:shadow-sm"
                     >
                       {/* Left Metadata Block */}
                       <div className="min-w-0 flex-1 space-y-1.5">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <span className="font-bold text-sm text-foreground">
+                        <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+                          <span className="font-bold text-sm text-foreground shrink-0">
                             {renderGuestName(guest)}
                           </span>
-                          <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-muted text-foreground border border-border">
+                          <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-muted text-foreground border border-border shrink-0">
                             {guest.pseudonymizedKey}
                           </span>
                           {guest.vipTier && (
-                            <Badge variant="outline" className="text-xs font-bold border-amber-600/50 text-amber-800 dark:text-amber-300 gap-1 bg-amber-50/50 dark:bg-amber-950/20">
+                            <Badge variant="outline" className="text-xs font-bold border-amber-600/50 text-amber-800 dark:text-amber-300 gap-1 bg-amber-50/50 dark:bg-amber-950/20 shrink-0">
                               <Star className="h-3 w-3 fill-amber-500 text-amber-500" />
                               {guest.vipTier}
                             </Badge>
@@ -829,24 +839,24 @@ export default function ReceptionistDashboard() {
                           {guest.npsScore !== undefined && <NpsScoreBadge score={guest.npsScore} size="sm" />}
                         </div>
 
-                        <div className="text-xs text-muted-foreground flex items-center gap-2 flex-wrap font-medium">
-                          <span>{guest.nationality} • {guest.language.toUpperCase()}</span>
+                        <div className="text-xs text-muted-foreground flex flex-wrap items-center gap-x-2.5 gap-y-1 font-medium">
+                          <span className="shrink-0">{guest.nationality} • {guest.language.toUpperCase()}</span>
                           <span>•</span>
-                          <span>{guest.totalStays} Stays</span>
+                          <span className="shrink-0">{guest.totalStays} Stays</span>
                           <span>•</span>
-                          <span className="font-bold text-foreground">
+                          <span className="font-bold text-foreground shrink-0">
                             €{guest.lifetimeValue.toLocaleString()} Lifetime Spend
                           </span>
                         </div>
                       </div>
 
                       {/* Right Action Rail (Strictly Aligned) */}
-                      <div className="flex items-center gap-2 shrink-0 sm:self-center">
+                      <div className="flex items-center gap-2 shrink-0 self-start sm:self-center pt-2 sm:pt-0">
                         <Button 
                           size="sm" 
                           variant="outline" 
                           onClick={() => setSelectedGuestForDossier(guest)}
-                          className="h-8 text-xs font-semibold px-3.5 border-border bg-card text-foreground hover:bg-muted shadow-2xs gap-1.5"
+                          className="h-8 px-3 text-xs font-semibold border border-border bg-card text-foreground hover:bg-muted hover:border-foreground/40 active:scale-[0.98] shadow-xs gap-1.5 transition-all shrink-0"
                         >
                           <UserCheck className="h-3.5 w-3.5 text-primary" />
                           Inspect Dossier
