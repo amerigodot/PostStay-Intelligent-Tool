@@ -30,6 +30,8 @@ const App = () => (
               
               {/* Receptionist Console */}
               <Route path="/receptionist" element={<ReceptionistDashboard />} />
+              <Route path="/receptionist/checkouts" element={<ReceptionistDashboard />} />
+              <Route path="/receptionist/in-house" element={<ReceptionistDashboard />} />
               <Route path="/receptionist/arrivals" element={<ReceptionistDashboard />} />
               <Route path="/receptionist/upsell" element={<ReceptionistDashboard />} />
               

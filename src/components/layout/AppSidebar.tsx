@@ -9,6 +9,7 @@ import {
   LogOut,
   Sparkles,
   Shield,
+  ArrowDownRight,
 } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -63,9 +64,9 @@ export function AppSidebar() {
     badge?: number;
   }>> = {
     receptionist: [
-      { title: 'Guest List', url: '/receptionist', icon: Users },
-      { title: 'Arrivals & Stays', url: '/receptionist/arrivals', icon: Users },
-      { title: 'Upsell Opportunities', url: '/receptionist/upsell', icon: Sparkles, badge: suggestedUpsellsCount },
+      { title: 'Check-Out Notices', url: '/receptionist/checkouts', icon: ArrowDownRight },
+      { title: 'In-House Status', url: '/receptionist/in-house', icon: Users },
+      { title: 'Check-In & Upsells', url: '/receptionist/arrivals', icon: Sparkles, badge: suggestedUpsellsCount },
     ],
     'guest-relations': [
       { title: 'Feedback Inbox', url: '/guest-relations', icon: MessageSquare, badge: unresolvedCount },
